@@ -1,11 +1,10 @@
-﻿using System.Threading.Tasks;
-using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using PlayDate.Sessions.Dto;
+using System.Threading.Tasks;
 
-namespace PlayDate.Sessions
+namespace PlayDate.Sessions;
+
+public interface ISessionAppService : IApplicationService
 {
-    public interface ISessionAppService : IApplicationService
-    {
-        Task<GetCurrentLoginInformationsOutput> GetCurrentLoginInformations();
-    }
+    Task<GetCurrentLoginInformationsOutput> GetCurrentLoginInformations();
 }

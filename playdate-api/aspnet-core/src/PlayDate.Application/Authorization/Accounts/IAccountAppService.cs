@@ -1,13 +1,12 @@
-﻿using System.Threading.Tasks;
-using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using PlayDate.Authorization.Accounts.Dto;
+using System.Threading.Tasks;
 
-namespace PlayDate.Authorization.Accounts
+namespace PlayDate.Authorization.Accounts;
+
+public interface IAccountAppService : IApplicationService
 {
-    public interface IAccountAppService : IApplicationService
-    {
-        Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input);
+    Task<IsTenantAvailableOutput> IsTenantAvailable(IsTenantAvailableInput input);
 
-        Task<RegisterOutput> Register(RegisterInput input);
-    }
+    Task<RegisterOutput> Register(RegisterInput input);
 }

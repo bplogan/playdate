@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 
 WORKDIR /src
 COPY ["src/PlayDate.Web.Host/PlayDate.Web.Host.csproj", "src/PlayDate.Web.Host/"]
@@ -18,7 +18,7 @@ COPY ["src/PlayDate.EntityFrameworkCore", "src/PlayDate.EntityFrameworkCore"]
 WORKDIR "/src/src/PlayDate.Web.Host"
 RUN dotnet publish -c Release -o /publish --no-restore
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
 EXPOSE 80
 WORKDIR /app
 COPY --from=build /publish .

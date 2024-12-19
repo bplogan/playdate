@@ -1,12 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Abp.MultiTenancy;
+﻿using Abp.MultiTenancy;
+using System.ComponentModel.DataAnnotations;
 
-namespace PlayDate.Authorization.Accounts.Dto
+namespace PlayDate.Authorization.Accounts.Dto;
+
+public class IsTenantAvailableInput
 {
-    public class IsTenantAvailableInput
-    {
-        [Required]
-        [StringLength(AbpTenantBase.MaxTenancyNameLength)]
-        public string TenancyName { get; set; }
-    }
+    [Required]
+    [StringLength(AbpTenantBase.MaxTenancyNameLength)]
+    public string TenancyName { get; set; }
 }

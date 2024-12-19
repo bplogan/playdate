@@ -1,10 +1,9 @@
-﻿using System.Threading.Tasks;
-using PlayDate.Configuration.Dto;
+﻿using PlayDate.Configuration.Dto;
+using System.Threading.Tasks;
 
-namespace PlayDate.Configuration
+namespace PlayDate.Configuration;
+
+public interface IConfigurationAppService
 {
-    public interface IConfigurationAppService
-    {
-        Task ChangeUiTheme(ChangeUiThemeInput input);
-    }
+    Task ChangeUiTheme(ChangeUiThemeInput input);
 }

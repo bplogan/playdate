@@ -1,12 +1,23 @@
 ﻿using Abp.Application.Services.Dto;
-using System;
+using Abp.Runtime.Validation;
 
-namespace PlayDate.Users.Dto
+namespace PlayDate.Users.Dto;
+
+//custom PagedResultRequestDto
+public class PagedUserResultRequestDto : PagedResultRequestDto, IShouldNormalize
 {
-    //custom PagedResultRequestDto
-    public class PagedUserResultRequestDto : PagedResultRequestDto
+    public string Keyword { get; set; }
+    public bool? IsActive { get; set; }
+
+    public string Sorting { get; set; }
+
+    public void Normalize()
     {
-        public string Keyword { get; set; }
-        public bool? IsActive { get; set; }
+        if (string.IsNullOrEmpty(Sorting))
+        {
+            Sorting = "UserName,EmailAddress";
+        }
+
+        Keyword = Keyword?.Trim();
     }
 }

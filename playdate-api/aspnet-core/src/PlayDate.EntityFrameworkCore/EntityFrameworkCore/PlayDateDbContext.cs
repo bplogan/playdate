@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Abp.Zero.EntityFrameworkCore;
+﻿using Abp.Zero.EntityFrameworkCore;
 using PlayDate.Authorization.Roles;
 using PlayDate.Authorization.Users;
 using PlayDate.MultiTenancy;

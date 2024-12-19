@@ -1,7 +1,6 @@
-﻿namespace PlayDate.Configuration
+﻿namespace PlayDate.Configuration;
+
+public static class AppSettingNames
 {
-    public static class AppSettingNames
-    {
-        public const string UiTheme = "App.UiTheme";
-    }
+    public const string UiTheme = "App.UiTheme";
 }

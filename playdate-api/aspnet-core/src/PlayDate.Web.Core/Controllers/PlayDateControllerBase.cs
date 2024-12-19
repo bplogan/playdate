@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace PlayDate.Controllers
 {
-    public abstract class PlayDateControllerBase: AbpController
+    public abstract class PlayDateControllerBase : AbpController
     {
         protected PlayDateControllerBase()
         {

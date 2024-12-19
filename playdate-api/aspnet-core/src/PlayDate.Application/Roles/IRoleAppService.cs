@@ -1,16 +1,15 @@
-﻿using System.Threading.Tasks;
-using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using Abp.Application.Services.Dto;
 using PlayDate.Roles.Dto;
+using System.Threading.Tasks;
 
-namespace PlayDate.Roles
+namespace PlayDate.Roles;
+
+public interface IRoleAppService : IAsyncCrudAppService<RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>
 {
-    public interface IRoleAppService : IAsyncCrudAppService<RoleDto, int, PagedRoleResultRequestDto, CreateRoleDto, RoleDto>
-    {
-        Task<ListResultDto<PermissionDto>> GetAllPermissions();
+    Task<ListResultDto<PermissionDto>> GetAllPermissions();
 
-        Task<GetRoleForEditOutput> GetRoleForEdit(EntityDto input);
+    Task<GetRoleForEditOutput> GetRoleForEdit(EntityDto input);
 
-        Task<ListResultDto<RoleListDto>> GetRolesAsync(GetRolesInput input);
-    }
+    Task<ListResultDto<RoleListDto>> GetRolesAsync(GetRolesInput input);
 }

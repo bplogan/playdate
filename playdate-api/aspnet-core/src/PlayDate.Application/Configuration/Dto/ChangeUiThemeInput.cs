@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PlayDate.Configuration.Dto
+namespace PlayDate.Configuration.Dto;
+
+public class ChangeUiThemeInput
 {
-    public class ChangeUiThemeInput
-    {
-        [Required]
-        [StringLength(32)]
-        public string Theme { get; set; }
-    }
+    [Required]
+    [StringLength(32)]
+    public string Theme { get; set; }
 }
