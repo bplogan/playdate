@@ -15,6 +15,6 @@ namespace PlayDate
         /// Default pass phrase for SimpleStringCipher decrypt/encrypt operations
         /// </summary>
         public static readonly string DefaultPassPhrase =
-            DebugHelper.IsDebug ? "gsKxGZ012HLL3MI5" : "a8c822a8da594cdab78b4bfe7b5d1f12";
+            DebugHelper.IsDebug ? "gsKxGZ012HLL3MI5" : "3c83af0f41294b8bb5e1da723d55a64b";
     }
 }

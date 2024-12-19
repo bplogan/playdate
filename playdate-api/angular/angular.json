@@ -98,21 +98,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "PlayDate:build"
+            "buildTarget": "PlayDate:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "PlayDate:build:production"
+              "buildTarget": "PlayDate:build:production"
             },
             "hmr": {
-              "browserTarget": "PlayDate:build:hmr"
+              "buildTarget": "PlayDate:build:hmr"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "PlayDate:build"
+            "buildTarget": "PlayDate:build"
           }
         },
         "test": {
@@ -182,5 +182,8 @@
     "@schematics/angular:directive": {
       "prefix": "app"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

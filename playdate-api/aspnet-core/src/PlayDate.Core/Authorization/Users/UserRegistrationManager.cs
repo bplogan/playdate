@@ -64,9 +64,16 @@ namespace PlayDate.Authorization.Users
 
             await _userManager.InitializeOptionsAsync(tenant.Id);
 
-            CheckErrors(await _userManager.CreateAsync(user, plainPassword));
-            await CurrentUnitOfWork.SaveChangesAsync();
-
+            var existingUser = await _userManager.FindByEmailAsync(user.EmailAddress);
+            if (existingUser == null)
+            {
+                CheckErrors(await _userManager.CreateAsync(user, plainPassword));
+                await CurrentUnitOfWork.SaveChangesAsync();
+            }
+            else
+            {
+                user.Id = -1;
+            }
             return user;
         }
 

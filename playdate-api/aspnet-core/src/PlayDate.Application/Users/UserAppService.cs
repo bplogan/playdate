@@ -25,7 +25,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PlayDate.Users
 {
-    [AbpAuthorize(PermissionNames.Pages_Users)]
+    [AbpAuthorize(PermissionNames.Pages)]
     public class UserAppService : AsyncCrudAppService<User, UserDto, long, PagedUserResultRequestDto, CreateUserDto, UserDto>, IUserAppService
     {
         private readonly UserManager _userManager;
@@ -52,7 +52,7 @@ namespace PlayDate.Users
             _abpSession = abpSession;
             _logInManager = logInManager;
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Users)]
         public override async Task<UserDto> CreateAsync(CreateUserDto input)
         {
             CheckCreatePermission();
@@ -75,7 +75,7 @@ namespace PlayDate.Users
 
             return MapToEntityDto(user);
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Users)]
         public override async Task<UserDto> UpdateAsync(UserDto input)
         {
             CheckUpdatePermission();
@@ -93,7 +93,7 @@ namespace PlayDate.Users
 
             return await GetAsync(input);
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Users)]
         public override async Task DeleteAsync(EntityDto<long> input)
         {
             var user = await _userManager.GetUserByIdAsync(input.Id);
@@ -117,13 +117,13 @@ namespace PlayDate.Users
                 entity.IsActive = false;
             });
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Users)]
         public async Task<ListResultDto<RoleDto>> GetRoles()
         {
             var roles = await _roleRepository.GetAllListAsync();
             return new ListResultDto<RoleDto>(ObjectMapper.Map<List<RoleDto>>(roles));
         }
-
+        [AbpAuthorize(PermissionNames.Pages_Users)]
         public async Task ChangeLanguage(ChangeUserLanguageDto input)
         {
             await SettingManager.ChangeSettingForUserAsync(
@@ -186,7 +186,7 @@ namespace PlayDate.Users
         {
             identityResult.CheckErrors(LocalizationManager);
         }
-
+        [AbpAuthorize(PermissionNames.Pages)]
         public async Task<bool> ChangePassword(ChangePasswordDto input)
         {
             await _userManager.InitializeOptionsAsync(AbpSession.TenantId);
@@ -211,7 +211,7 @@ namespace PlayDate.Users
 
             return true;
         }
-
+        [AbpAuthorize(PermissionNames.Pages)]
         public async Task<bool> ResetPassword(ResetPasswordDto input)
         {
             if (_abpSession.UserId == null)
