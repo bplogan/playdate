@@ -14,9 +14,10 @@ namespace PlayDate.Authorization
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
         }
+        private static ILocalizableString L(string name)
+        {
+            return new LocalizableString(name, PlayDateConsts.LocalizationSourceName);
+        }
     }
-    private static ILocalizableString L(string name)
-    {
-        return new LocalizableString(name, PlayDateConsts.LocalizationSourceName);
-    }
+   
 }
