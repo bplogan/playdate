@@ -1,0 +1,58 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-icon (click)="goBack()" color="primary" style="font-size:36px;" slot="icon-only" name="chevron-back-outline"></ion-icon>
+    </ion-buttons>
+      <img slot="start" class="header-logo" alt="" src="../../../assets/playdate-logo-dark.png" />
+    <ion-buttons slot="end">
+      <ion-icon (click)="goUser()" color="primary" style="font-size:36px;" slot="icon-only" name="person-circle"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+    {{players.length}}
+    <!-- players -->
+    <div class="div-info-center" *ngIf="players && players.length > 0 ">
+      <ion-text color="">
+        <h1>Players</h1>
+      </ion-text>
+
+
+      <ion-list lines="full">
+        <ion-item button="true" *ngFor="let player of players; index as i" (click)="goPlayer(player.id)">
+          <ion-avatar aria-hidden="true" slot="start">
+            <img alt="" src="https://ionicframework.com/docs/img/demos/avatar.svg" />
+          </ion-avatar>
+          <ion-label>{{player.fullName}}</ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+
+
+    <!-- no players -->
+    <div class="div-info-center" *ngIf="players == null || players.length == 0">
+      <ion-text color="">
+        <ion-icon class="text-icon-top-center" name="people-outline"></ion-icon>
+        <h1>No Players</h1>
+        <p>Get started by adding a player.  Once you have a player you can add Friends, create and join Playdates, and communicate with others!</p>
+        <ion-button (click)="goAddPlayer()"  fill="clear" color="">
+          <ion-icon name="add-outline"></ion-icon> Player
+        </ion-button>
+      </ion-text>
+    </div>
+  
+    <!-- no friends -->
+    <div class="div-info-center top-200" *ngIf="allFriends.length == 0 && players.length > 0 ">
+      <ion-text color="">
+        
+        <h1>Friends</h1>
+        <ion-icon class="text-icon-top-center" name="people-outline"></ion-icon>
+        <p>Adding friends will allow them to see and join your Playdates!</p>
+        <ion-button (click)="goAddFriend()" fill="clear" color="">
+          <ion-icon name="add-outline"></ion-icon> Friend
+        </ion-button>
+      </ion-text>
+    </div>
+<ion-content> 
+  
+

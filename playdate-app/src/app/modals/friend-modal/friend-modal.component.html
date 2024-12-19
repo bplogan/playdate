@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">
+        <ion-icon name="close" class="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{modalTitle}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="confirmFriendModal()">
+        <ion-icon name="checkmark" class="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <h1>Add a friend</h1>
+
+  <p>Your friends can find their codes in the app on their individual player page.  Enter the code in the box below to send a friend request!.</p>
+ 
+    <ion-select [(ngModel)]="newFriendInput.playerIds" placeholder="Select player(s)" [multiple]="true">
+      <ion-select-option *ngFor="let player of players; index as i" >{{player.fullName}}</ion-select-option>
+    </ion-select>
+    <ion-input [(ngModel)]="friendCode" fill="outline"  placeholder="enter a friend code...">
+      <ion-button slot="end" color="success" aria-label="Submit">
+        <ion-icon slot="icon-only" color="medium" name="send-outline" aria-hidden="true"></ion-icon>
+      </ion-button>
+    </ion-input>
+ 
+</ion-content>
