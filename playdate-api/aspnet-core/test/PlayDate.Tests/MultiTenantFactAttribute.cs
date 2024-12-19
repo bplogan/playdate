@@ -1,15 +1,14 @@
 ﻿using Xunit;
 
-namespace PlayDate.Tests
+namespace PlayDate.Tests;
+
+public sealed class MultiTenantFactAttribute : FactAttribute
 {
-    public sealed class MultiTenantFactAttribute : FactAttribute
+    public MultiTenantFactAttribute()
     {
-        public MultiTenantFactAttribute()
+        if (!PlayDateConsts.MultiTenancyEnabled)
         {
-            if (!PlayDateConsts.MultiTenancyEnabled)
-            {
-                Skip = "MultiTenancy is disabled.";
-            }
+            Skip = "MultiTenancy is disabled.";
         }
     }
 }

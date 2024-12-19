@@ -1,7 +1,6 @@
-﻿namespace PlayDate.Authorization.Accounts.Dto
+﻿namespace PlayDate.Authorization.Accounts.Dto;
+
+public class RegisterOutput
 {
-    public class RegisterOutput
-    {
-        public bool CanLogin { get; set; }
-    }
+    public bool CanLogin { get; set; }
 }

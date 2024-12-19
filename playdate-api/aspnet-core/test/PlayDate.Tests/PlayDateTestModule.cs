@@ -1,62 +1,61 @@
-using System;
-using Castle.MicroKernel.Registration;
-using NSubstitute;
 using Abp.AutoMapper;
+using Abp.Configuration.Startup;
 using Abp.Dependency;
 using Abp.Modules;
-using Abp.Configuration.Startup;
 using Abp.Net.Mail;
 using Abp.TestBase;
 using Abp.Zero.Configuration;
 using Abp.Zero.EntityFrameworkCore;
 using PlayDate.EntityFrameworkCore;
 using PlayDate.Tests.DependencyInjection;
+using Castle.MicroKernel.Registration;
+using NSubstitute;
+using System;
 
-namespace PlayDate.Tests
+namespace PlayDate.Tests;
+
+[DependsOn(
+    typeof(PlayDateApplicationModule),
+    typeof(PlayDateEntityFrameworkModule),
+    typeof(AbpTestBaseModule)
+    )]
+public class PlayDateTestModule : AbpModule
 {
-    [DependsOn(
-        typeof(PlayDateApplicationModule),
-        typeof(PlayDateEntityFrameworkModule),
-        typeof(AbpTestBaseModule)
-        )]
-    public class PlayDateTestModule : AbpModule
+    public PlayDateTestModule(PlayDateEntityFrameworkModule abpProjectNameEntityFrameworkModule)
     {
-        public PlayDateTestModule(PlayDateEntityFrameworkModule abpProjectNameEntityFrameworkModule)
-        {
-            abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
-            abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
-        }
+        abpProjectNameEntityFrameworkModule.SkipDbContextRegistration = true;
+        abpProjectNameEntityFrameworkModule.SkipDbSeed = true;
+    }
 
-        public override void PreInitialize()
-        {
-            Configuration.UnitOfWork.Timeout = TimeSpan.FromMinutes(30);
-            Configuration.UnitOfWork.IsTransactional = false;
+    public override void PreInitialize()
+    {
+        Configuration.UnitOfWork.Timeout = TimeSpan.FromMinutes(30);
+        Configuration.UnitOfWork.IsTransactional = false;
 
-            // Disable static mapper usage since it breaks unit tests (see https://github.com/aspnetboilerplate/aspnetboilerplate/issues/2052)
-            Configuration.Modules.AbpAutoMapper().UseStaticMapper = false;
+        // Disable static mapper usage since it breaks unit tests (see https://github.com/aspnetboilerplate/aspnetboilerplate/issues/2052)
+        Configuration.Modules.AbpAutoMapper().UseStaticMapper = false;
 
-            Configuration.BackgroundJobs.IsJobExecutionEnabled = false;
+        Configuration.BackgroundJobs.IsJobExecutionEnabled = false;
 
-            // Use database for language management
-            Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
+        // Use database for language management
+        Configuration.Modules.Zero().LanguageManagement.EnableDbLocalization();
 
-            RegisterFakeService<AbpZeroDbMigrator<PlayDateDbContext>>();
+        RegisterFakeService<AbpZeroDbMigrator<PlayDateDbContext>>();
 
-            Configuration.ReplaceService<IEmailSender, NullEmailSender>(DependencyLifeStyle.Transient);
-        }
+        Configuration.ReplaceService<IEmailSender, NullEmailSender>(DependencyLifeStyle.Transient);
+    }
 
-        public override void Initialize()
-        {
-            ServiceCollectionRegistrar.Register(IocManager);
-        }
+    public override void Initialize()
+    {
+        ServiceCollectionRegistrar.Register(IocManager);
+    }
 
-        private void RegisterFakeService<TService>() where TService : class
-        {
-            IocManager.IocContainer.Register(
-                Component.For<TService>()
-                    .UsingFactoryMethod(() => Substitute.For<TService>())
-                    .LifestyleSingleton()
-            );
-        }
+    private void RegisterFakeService<TService>() where TService : class
+    {
+        IocManager.IocContainer.Register(
+            Component.For<TService>()
+                .UsingFactoryMethod(() => Substitute.For<TService>())
+                .LifestyleSingleton()
+        );
     }
 }

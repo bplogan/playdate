@@ -1,19 +1,18 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using Castle.Windsor.MsDependencyInjection;
-using Abp.Dependency;
+﻿using Abp.Dependency;
 using PlayDate.Identity;
+using Castle.Windsor.MsDependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace PlayDate.Migrator.DependencyInjection
+namespace PlayDate.Migrator.DependencyInjection;
+
+public static class ServiceCollectionRegistrar
 {
-    public static class ServiceCollectionRegistrar
+    public static void Register(IIocManager iocManager)
     {
-        public static void Register(IIocManager iocManager)
-        {
-            var services = new ServiceCollection();
+        var services = new ServiceCollection();
 
-            IdentityRegistrar.Register(services);
+        IdentityRegistrar.Register(services);
 
-            WindsorRegistrationHelper.CreateServiceProvider(iocManager.IocContainer, services);
-        }
+        WindsorRegistrationHelper.CreateServiceProvider(iocManager.IocContainer, services);
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Threading.Tasks;
-using Abp.Dependency;
+﻿using Abp.Dependency;
+using System.Threading.Tasks;
 
 namespace PlayDate.Authentication.External
 {

@@ -1,10 +1,9 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace PlayDate.Users.Dto
+namespace PlayDate.Users.Dto;
+
+public class ChangeUserLanguageDto
 {
-    public class ChangeUserLanguageDto
-    {
-        [Required]
-        public string LanguageName { get; set; }
-    }
+    [Required]
+    public string LanguageName { get; set; }
 }

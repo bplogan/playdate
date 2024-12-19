@@ -1,47 +1,46 @@
-﻿using System;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Identity;
-using Abp.Application.Services;
+﻿using Abp.Application.Services;
 using Abp.IdentityFramework;
 using Abp.Runtime.Session;
 using PlayDate.Authorization.Users;
 using PlayDate.MultiTenancy;
+using Microsoft.AspNetCore.Identity;
+using System;
+using System.Threading.Tasks;
 
-namespace PlayDate
+namespace PlayDate;
+
+/// <summary>
+/// Derive your application services from this class.
+/// </summary>
+public abstract class PlayDateAppServiceBase : ApplicationService
 {
-    /// <summary>
-    /// Derive your application services from this class.
-    /// </summary>
-    public abstract class PlayDateAppServiceBase : ApplicationService
+    public TenantManager TenantManager { get; set; }
+
+    public UserManager UserManager { get; set; }
+
+    protected PlayDateAppServiceBase()
     {
-        public TenantManager TenantManager { get; set; }
+        LocalizationSourceName = PlayDateConsts.LocalizationSourceName;
+    }
 
-        public UserManager UserManager { get; set; }
-
-        protected PlayDateAppServiceBase()
+    protected virtual async Task<User> GetCurrentUserAsync()
+    {
+        var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
+        if (user == null)
         {
-            LocalizationSourceName = PlayDateConsts.LocalizationSourceName;
+            throw new Exception("There is no current user!");
         }
 
-        protected virtual async Task<User> GetCurrentUserAsync()
-        {
-            var user = await UserManager.FindByIdAsync(AbpSession.GetUserId().ToString());
-            if (user == null)
-            {
-                throw new Exception("There is no current user!");
-            }
+        return user;
+    }
 
-            return user;
-        }
+    protected virtual Task<Tenant> GetCurrentTenantAsync()
+    {
+        return TenantManager.GetByIdAsync(AbpSession.GetTenantId());
+    }
 
-        protected virtual Task<Tenant> GetCurrentTenantAsync()
-        {
-            return TenantManager.GetByIdAsync(AbpSession.GetTenantId());
-        }
-
-        protected virtual void CheckErrors(IdentityResult identityResult)
-        {
-            identityResult.CheckErrors(LocalizationManager);
-        }
+    protected virtual void CheckErrors(IdentityResult identityResult)
+    {
+        identityResult.CheckErrors(LocalizationManager);
     }
 }

@@ -1,29 +1,28 @@
-﻿using System.Threading.Tasks;
-using PlayDate.Models.TokenAuth;
+﻿using PlayDate.Models.TokenAuth;
 using PlayDate.Web.Controllers;
 using Shouldly;
+using System.Threading.Tasks;
 using Xunit;
 
-namespace PlayDate.Web.Tests.Controllers
+namespace PlayDate.Web.Tests.Controllers;
+
+public class HomeController_Tests : PlayDateWebTestBase
 {
-    public class HomeController_Tests: PlayDateWebTestBase
+    [Fact]
+    public async Task Index_Test()
     {
-        [Fact]
-        public async Task Index_Test()
+        await AuthenticateAsync(null, new AuthenticateModel
         {
-            await AuthenticateAsync(null, new AuthenticateModel
-            {
-                UserNameOrEmailAddress = "admin",
-                Password = "123qwe"
-            });
+            UserNameOrEmailAddress = "admin",
+            Password = "123qwe"
+        });
 
-            //Act
-            var response = await GetResponseAsStringAsync(
-                GetUrl<HomeController>(nameof(HomeController.Index))
-            );
+        //Act
+        var response = await GetResponseAsStringAsync(
+            GetUrl<HomeController>(nameof(HomeController.Index))
+        );
 
-            //Assert
-            response.ShouldNotBeNullOrEmpty();
-        }
+        //Assert
+        response.ShouldNotBeNullOrEmpty();
     }
 }

@@ -1,11 +1,23 @@
 ﻿using Abp.Application.Services.Dto;
+using Abp.Runtime.Validation;
 
-namespace PlayDate.MultiTenancy.Dto
+namespace PlayDate.MultiTenancy.Dto;
+
+public class PagedTenantResultRequestDto : PagedResultRequestDto, IShouldNormalize
 {
-    public class PagedTenantResultRequestDto : PagedResultRequestDto
+    public string Keyword { get; set; }
+    public bool? IsActive { get; set; }
+
+    public string Sorting { get; set; }
+
+    public void Normalize()
     {
-        public string Keyword { get; set; }
-        public bool? IsActive { get; set; }
+        if (string.IsNullOrEmpty(Sorting))
+        {
+            Sorting = "TenancyName,Name";
+        }
+
+        Keyword = Keyword?.Trim();
     }
 }
 

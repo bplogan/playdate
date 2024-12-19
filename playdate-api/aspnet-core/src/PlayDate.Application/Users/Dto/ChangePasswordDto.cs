@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PlayDate.Users.Dto
-{
-    public class ChangePasswordDto
-    {
-        [Required]
-        public string CurrentPassword { get; set; }
+namespace PlayDate.Users.Dto;
 
-        [Required]
-        public string NewPassword { get; set; }
-    }
+public class ChangePasswordDto
+{
+    [Required]
+    public string CurrentPassword { get; set; }
+
+    [Required]
+    public string NewPassword { get; set; }
 }

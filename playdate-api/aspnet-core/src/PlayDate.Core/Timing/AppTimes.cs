@@ -1,13 +1,12 @@
-﻿using System;
-using Abp.Dependency;
+﻿using Abp.Dependency;
+using System;
 
-namespace PlayDate.Timing
+namespace PlayDate.Timing;
+
+public class AppTimes : ISingletonDependency
 {
-    public class AppTimes : ISingletonDependency
-    {
-        /// <summary>
-        /// Gets the startup time of the application.
-        /// </summary>
-        public DateTime StartupTime { get; set; }
-    }
+    /// <summary>
+    /// Gets the startup time of the application.
+    /// </summary>
+    public DateTime StartupTime { get; set; }
 }

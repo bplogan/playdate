@@ -2,13 +2,12 @@
 using Abp.AutoMapper;
 using PlayDate.MultiTenancy;
 
-namespace PlayDate.Sessions.Dto
-{
-    [AutoMapFrom(typeof(Tenant))]
-    public class TenantLoginInfoDto : EntityDto
-    {
-        public string TenancyName { get; set; }
+namespace PlayDate.Sessions.Dto;
 
-        public string Name { get; set; }
-    }
+[AutoMapFrom(typeof(Tenant))]
+public class TenantLoginInfoDto : EntityDto
+{
+    public string TenancyName { get; set; }
+
+    public string Name { get; set; }
 }

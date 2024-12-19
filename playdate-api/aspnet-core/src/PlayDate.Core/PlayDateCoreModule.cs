@@ -12,44 +12,43 @@ using PlayDate.Localization;
 using PlayDate.MultiTenancy;
 using PlayDate.Timing;
 
-namespace PlayDate
+namespace PlayDate;
+
+[DependsOn(typeof(AbpZeroCoreModule))]
+public class PlayDateCoreModule : AbpModule
 {
-    [DependsOn(typeof(AbpZeroCoreModule))]
-    public class PlayDateCoreModule : AbpModule
+    public override void PreInitialize()
     {
-        public override void PreInitialize()
-        {
-            Configuration.Auditing.IsEnabledForAnonymousUsers = true;
+        Configuration.Auditing.IsEnabledForAnonymousUsers = true;
 
-            // Declare entity types
-            Configuration.Modules.Zero().EntityTypes.Tenant = typeof(Tenant);
-            Configuration.Modules.Zero().EntityTypes.Role = typeof(Role);
-            Configuration.Modules.Zero().EntityTypes.User = typeof(User);
+        // Declare entity types
+        Configuration.Modules.Zero().EntityTypes.Tenant = typeof(Tenant);
+        Configuration.Modules.Zero().EntityTypes.Role = typeof(Role);
+        Configuration.Modules.Zero().EntityTypes.User = typeof(User);
 
-            PlayDateLocalizationConfigurer.Configure(Configuration.Localization);
+        PlayDateLocalizationConfigurer.Configure(Configuration.Localization);
 
-            // Enable this line to create a multi-tenant application.
-            Configuration.MultiTenancy.IsEnabled = PlayDateConsts.MultiTenancyEnabled;
+        // Enable this line to create a multi-tenant application.
+        Configuration.MultiTenancy.IsEnabled = PlayDateConsts.MultiTenancyEnabled;
 
-            // Configure roles
-            AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);
+        // Configure roles
+        AppRoleConfig.Configure(Configuration.Modules.Zero().RoleManagement);
 
-            Configuration.Settings.Providers.Add<AppSettingProvider>();
-            
-            Configuration.Localization.Languages.Add(new LanguageInfo("fa", "فارسی", "famfamfam-flags ir"));
-            
-            Configuration.Settings.SettingEncryptionConfiguration.DefaultPassPhrase = PlayDateConsts.DefaultPassPhrase;
-            SimpleStringCipher.DefaultPassPhrase = PlayDateConsts.DefaultPassPhrase;
-        }
+        Configuration.Settings.Providers.Add<AppSettingProvider>();
 
-        public override void Initialize()
-        {
-            IocManager.RegisterAssemblyByConvention(typeof(PlayDateCoreModule).GetAssembly());
-        }
+        Configuration.Localization.Languages.Add(new LanguageInfo("fa", "فارسی", "famfamfam-flags ir"));
 
-        public override void PostInitialize()
-        {
-            IocManager.Resolve<AppTimes>().StartupTime = Clock.Now;
-        }
+        Configuration.Settings.SettingEncryptionConfiguration.DefaultPassPhrase = PlayDateConsts.DefaultPassPhrase;
+        SimpleStringCipher.DefaultPassPhrase = PlayDateConsts.DefaultPassPhrase;
+    }
+
+    public override void Initialize()
+    {
+        IocManager.RegisterAssemblyByConvention(typeof(PlayDateCoreModule).GetAssembly());
+    }
+
+    public override void PostInitialize()
+    {
+        IocManager.Resolve<AppTimes>().StartupTime = Clock.Now;
     }
 }

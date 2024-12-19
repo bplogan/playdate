@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Abp.Authorization;
+﻿using Abp.Authorization;
 using Abp.Authorization.Users;
 using Abp.Configuration;
 using Abp.Configuration.Startup;
@@ -10,36 +9,36 @@ using Abp.Zero.Configuration;
 using PlayDate.Authorization.Roles;
 using PlayDate.Authorization.Users;
 using PlayDate.MultiTenancy;
+using Microsoft.AspNetCore.Identity;
 
-namespace PlayDate.Authorization
+namespace PlayDate.Authorization;
+
+public class LogInManager : AbpLogInManager<Tenant, Role, User>
 {
-    public class LogInManager : AbpLogInManager<Tenant, Role, User>
+    public LogInManager(
+        UserManager userManager,
+        IMultiTenancyConfig multiTenancyConfig,
+        IRepository<Tenant> tenantRepository,
+        IUnitOfWorkManager unitOfWorkManager,
+        ISettingManager settingManager,
+        IRepository<UserLoginAttempt, long> userLoginAttemptRepository,
+        IUserManagementConfig userManagementConfig,
+        IIocResolver iocResolver,
+        IPasswordHasher<User> passwordHasher,
+        RoleManager roleManager,
+        UserClaimsPrincipalFactory claimsPrincipalFactory)
+        : base(
+              userManager,
+              multiTenancyConfig,
+              tenantRepository,
+              unitOfWorkManager,
+              settingManager,
+              userLoginAttemptRepository,
+              userManagementConfig,
+              iocResolver,
+              passwordHasher,
+              roleManager,
+              claimsPrincipalFactory)
     {
-        public LogInManager(
-            UserManager userManager, 
-            IMultiTenancyConfig multiTenancyConfig,
-            IRepository<Tenant> tenantRepository,
-            IUnitOfWorkManager unitOfWorkManager,
-            ISettingManager settingManager, 
-            IRepository<UserLoginAttempt, long> userLoginAttemptRepository, 
-            IUserManagementConfig userManagementConfig,
-            IIocResolver iocResolver,
-            IPasswordHasher<User> passwordHasher, 
-            RoleManager roleManager,
-            UserClaimsPrincipalFactory claimsPrincipalFactory) 
-            : base(
-                  userManager, 
-                  multiTenancyConfig,
-                  tenantRepository, 
-                  unitOfWorkManager, 
-                  settingManager, 
-                  userLoginAttemptRepository, 
-                  userManagementConfig, 
-                  iocResolver, 
-                  passwordHasher, 
-                  roleManager, 
-                  claimsPrincipalFactory)
-        {
-        }
     }
 }

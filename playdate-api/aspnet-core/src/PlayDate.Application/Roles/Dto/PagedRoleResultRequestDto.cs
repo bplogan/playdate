@@ -1,10 +1,21 @@
 ﻿using Abp.Application.Services.Dto;
+using Abp.Runtime.Validation;
 
-namespace PlayDate.Roles.Dto
+namespace PlayDate.Roles.Dto;
+
+public class PagedRoleResultRequestDto : PagedResultRequestDto, IShouldNormalize
 {
-    public class PagedRoleResultRequestDto : PagedResultRequestDto
+    public string Keyword { get; set; }
+    public string Sorting { get; set; }
+
+    public void Normalize()
     {
-        public string Keyword { get; set; }
+        if (string.IsNullOrEmpty(Sorting))
+        {
+            Sorting = "Name,DisplayName";
+        }
+
+        Keyword = Keyword?.Trim();
     }
 }
 

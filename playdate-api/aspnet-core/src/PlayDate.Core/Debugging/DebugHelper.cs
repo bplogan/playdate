@@ -1,18 +1,17 @@
-﻿namespace PlayDate.Debugging
+﻿namespace PlayDate.Debugging;
+
+public static class DebugHelper
 {
-    public static class DebugHelper
+    public static bool IsDebug
     {
-        public static bool IsDebug
+        get
         {
-            get
-            {
 #pragma warning disable
 #if DEBUG
-                return true;
+            return true;
 #endif
-                return false;
+            return false;
 #pragma warning restore
-            }
         }
     }
 }

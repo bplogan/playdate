@@ -3,28 +3,27 @@ using Abp.Modules;
 using Abp.Reflection.Extensions;
 using PlayDate.Authorization;
 
-namespace PlayDate
+namespace PlayDate;
+
+[DependsOn(
+    typeof(PlayDateCoreModule),
+    typeof(AbpAutoMapperModule))]
+public class PlayDateApplicationModule : AbpModule
 {
-    [DependsOn(
-        typeof(PlayDateCoreModule), 
-        typeof(AbpAutoMapperModule))]
-    public class PlayDateApplicationModule : AbpModule
+    public override void PreInitialize()
     {
-        public override void PreInitialize()
-        {
-            Configuration.Authorization.Providers.Add<PlayDateAuthorizationProvider>();
-        }
+        Configuration.Authorization.Providers.Add<PlayDateAuthorizationProvider>();
+    }
 
-        public override void Initialize()
-        {
-            var thisAssembly = typeof(PlayDateApplicationModule).GetAssembly();
+    public override void Initialize()
+    {
+        var thisAssembly = typeof(PlayDateApplicationModule).GetAssembly();
 
-            IocManager.RegisterAssemblyByConvention(thisAssembly);
+        IocManager.RegisterAssemblyByConvention(thisAssembly);
 
-            Configuration.Modules.AbpAutoMapper().Configurators.Add(
-                // Scan the assembly for classes which inherit from AutoMapper.Profile
-                cfg => cfg.AddMaps(thisAssembly)
-            );
-        }
+        Configuration.Modules.AbpAutoMapper().Configurators.Add(
+            // Scan the assembly for classes which inherit from AutoMapper.Profile
+            cfg => cfg.AddMaps(thisAssembly)
+        );
     }
 }
